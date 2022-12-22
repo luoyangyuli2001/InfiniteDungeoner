@@ -92,7 +92,6 @@ public class RoomTemplateScriptableObject : ScriptableObject
 
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);
 
-        // Check spawn positions populated
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPositionArray), spawnPositionArray);
     }
 
