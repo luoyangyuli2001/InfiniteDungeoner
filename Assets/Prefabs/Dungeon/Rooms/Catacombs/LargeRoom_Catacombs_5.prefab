@@ -32035,6 +32035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8227588318318580144}
   - component: {fileID: 1462120759972737929}
+  - component: {fileID: 7546278771701776147}
   m_Layer: 12
   m_Name: LargeRoom_Catacombs_5
   m_TagString: Untagged
@@ -32085,6 +32086,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 56, y: 58}
   m_EdgeRadius: 0
+--- !u!114 &7546278771701776147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327421925113694216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c85f08d09f95484d8357e331f3e767a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  groundTilemap: {fileID: 0}
+  decoration1Tilemap: {fileID: 0}
+  decoration2Tilemap: {fileID: 0}
+  frontTilemap: {fileID: 0}
+  collisionTilemap: {fileID: 0}
+  minimapTilemap: {fileID: 0}
+  roomColliderBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &4561116449979205807
 GameObject:
   m_ObjectHideFlags: 0
@@ -84265,7 +84288,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 21
-      m_TileSpriteIndex: 36
+      m_TileSpriteIndex: 41
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -85860,8 +85883,8 @@ Tilemap:
     m_Data: {fileID: 568828816151468512, guid: 741b8b35a2b4e5a438592c0522e41ff0, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 2224769489055494495, guid: 741b8b35a2b4e5a438592c0522e41ff0, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 4344834535306632393, guid: acd82b6c545081944a50df6c0f836293, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 6085378443300166772, guid: e19958bce5815954fb0a0cda77c7b276, type: 3}
   - m_RefCount: 1
@@ -85870,8 +85893,8 @@ Tilemap:
     m_Data: {fileID: -204266743160736610, guid: af46e1a253e6e274a9349091137560b3, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -2865094910933105964, guid: af46e1a253e6e274a9349091137560b3, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 4344834535306632393, guid: acd82b6c545081944a50df6c0f836293, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 107
     m_Data:
