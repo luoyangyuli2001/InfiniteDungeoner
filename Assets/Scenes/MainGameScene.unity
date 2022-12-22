@@ -221,9 +221,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.11936338
-    width: 0.9995093
-    height: 0.75982255
+    y: 0.08128079
+    width: 1
+    height: 0.8368226
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -386,7 +386,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564851109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -41.847595, y: 33.24791, z: -1.046818}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -519,6 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317058079}
   - component: {fileID: 1317058078}
+  - component: {fileID: 1317058080}
   m_Layer: 0
   m_Name: CinemachineTargetGroup
   m_TagString: Untagged
@@ -557,6 +558,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1317058080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317058077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4c957041a87264bb3feab3f15a414a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1602700196
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +801,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e16b59198a5ddf4b9d25301d0c92bef, type: 2}
   - {fileID: 11400000, guid: 4ab9891c58dd77d40b81d94e27077a7a, type: 2}
   - {fileID: 11400000, guid: e333bef96fcd9e844ae1d3587ea42868, type: 2}
-  currentDungeonLevelListIndex: 5
+  currentDungeonLevelListIndex: 0
   gameState: 0
 --- !u!4 &1879699887
 Transform:
@@ -798,7 +811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879699885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -41.847595, y: 33.24791, z: -1.046818}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
