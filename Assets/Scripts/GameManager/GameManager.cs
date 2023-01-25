@@ -44,6 +44,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         InstantiatePlayer();
     }
 
+    private void OnEnable()
+    {
+        StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+    }
+
+    private void OnDisable()
+    {
+        StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+    }
+
+    private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+    {
+        SetCurrentRoom(roomChangedEventArgs.room);
+    }
+
     private void InstantiatePlayer()
     {
         GameObject playerGameObject = Instantiate(playerDetails.playerPrefab);
