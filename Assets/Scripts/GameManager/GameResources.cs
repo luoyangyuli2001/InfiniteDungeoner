@@ -35,7 +35,7 @@ public class GameResources : MonoBehaviour
     #region Tooltip
     [Tooltip("The current player scriptable object - this is used to reference the current player between scenes")]
     #endregion Tooltip
-    public CurrentPlayerScriptableObject CurrentPlayer;
+    public CurrentPlayerScriptableObject currentPlayer;
 
     #region Header MATERIALS
     [Space(10)]
@@ -45,4 +45,27 @@ public class GameResources : MonoBehaviour
     [Tooltip("Dimmed Material")]
     #endregion
     public Material dimmedMaterial;
+
+    #region Tooltip
+    [Tooltip("Sprite-Lit-Default Material")]
+    #endregion
+    public Material litMaterial;
+
+    #region Tooltip
+    [Tooltip("Populate with the Variable Lit Shader")]
+    #endregion
+    public Shader variableLitShader;
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this,nameof(roomNodeTypeList),roomNodeTypeList);
+        HelperUtilities.ValidateCheckNullValue(this,nameof(currentPlayer),currentPlayer);
+        HelperUtilities.ValidateCheckNullValue(this,nameof(litMaterial),litMaterial);
+        HelperUtilities.ValidateCheckNullValue(this,nameof(dimmedMaterial),dimmedMaterial);
+        HelperUtilities.ValidateCheckNullValue(this,nameof(variableLitShader),variableLitShader);
+    }
+#endif
+    #endregion
 }
