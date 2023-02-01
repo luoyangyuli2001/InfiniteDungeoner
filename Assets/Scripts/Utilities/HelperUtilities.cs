@@ -86,13 +86,11 @@ public static class HelperUtilities
     {
         bool error = false;
         int count = 0;
-
         if (enumerableObjectToCheck == null)
         {
             Debug.Log(fieldName + "is null in object " + thisObject.name.ToString());
             return true;
         }
-
         foreach (var item in enumerableObjectToCheck)
         {
             if(item == null)
@@ -105,7 +103,6 @@ public static class HelperUtilities
                 count++;
             }
         }
-
         if (count == 0)
         {
             Debug.Log(fieldName + " has no values in object " + thisObject.name.ToString());
@@ -117,37 +114,28 @@ public static class HelperUtilities
     public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
     {
         Room currentRoom = GameManager.Instance.GetCurrentRoom();
-
         Grid grid = currentRoom.instantiatedRoom.grid;
-
         Vector3 nearestSpawnPosition = new Vector3(10000f, 10000f, 0f);
-
         foreach (Vector2Int spawnPositionGrid in currentRoom.spawnPositionArray)
         {
             Vector3 spawnPositionWorld = grid.CellToWorld((Vector3Int)spawnPositionGrid);
-
             if (Vector3.Distance(spawnPositionWorld, playerPosition) < Vector3.Distance(nearestSpawnPosition, playerPosition))
             {
                 nearestSpawnPosition = spawnPositionWorld;
             }
         }
-
         return nearestSpawnPosition;
     }
 
     public static Vector3 GetMouseWorldPosition()
     {
         if (mainCamera == null) mainCamera = Camera.main;
-        
+    
         Vector3 mouseScreenPosition = Input.mousePosition;
-
         mouseScreenPosition.x = Mathf.Clamp(mouseScreenPosition.x, 0f, Screen.width);
         mouseScreenPosition.y = Mathf.Clamp(mouseScreenPosition.y, 0f, Screen.height);
-
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
-
         worldPosition.z = 0f;
-
         return worldPosition;
     }
 
@@ -161,7 +149,6 @@ public static class HelperUtilities
     public static AimDirection GetAimDirection(float angleDegrees)
     {
         AimDirection aimDirection;
-
         if (angleDegrees >= 22f && angleDegrees <= 67f)
         {
             aimDirection = AimDirection.UpRight;
@@ -190,10 +177,12 @@ public static class HelperUtilities
         {
             aimDirection = AimDirection.Right;
         }
-
         return aimDirection;
-
     }
 
-
+    public static Vector3 GetDirectionVectorFromAngle(float angle)
+    {
+        Vector3 directionVector = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0f);
+        return directionVector;
+    }
 }
