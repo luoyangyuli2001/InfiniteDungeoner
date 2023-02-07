@@ -128,6 +128,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         return player;
     }
 
+    public Sprite GetPlayerMiniMapIcon()
+    {
+        return playerDetails.playerMiniMapIcon;
+    }
+
     #region Validation
 
 #if UNITY_EDITOR
