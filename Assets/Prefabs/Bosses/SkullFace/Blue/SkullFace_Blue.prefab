@@ -195,6 +195,14 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4380452421922339188, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
+      propertyPath: enemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: e8a1e0d4ec3827c4ea9d2bf8d64123ea, type: 2}
+    - target: {fileID: 6858521639923260507, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
+      propertyPath: movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: 69ffe4d0b6edb364a9926f142fd2287b, type: 2}
     - target: {fileID: 7151542295393589514, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
       propertyPath: m_Name
       value: SkullFace_Blue

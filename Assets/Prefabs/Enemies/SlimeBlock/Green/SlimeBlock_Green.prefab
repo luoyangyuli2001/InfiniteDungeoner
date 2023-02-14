@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1011192569501529667, guid: aa0a087fc96a7b64dab2c51113046ef2, type: 3}
+      propertyPath: enemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: 778c17a698de4164fafb2b446285e281, type: 2}
     - target: {fileID: 1241673958785613266, guid: aa0a087fc96a7b64dab2c51113046ef2, type: 3}
       propertyPath: m_Color.b
       value: 0.47058824
@@ -107,6 +111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeBlock_Green
       objectReference: {fileID: 0}
+    - target: {fileID: 7920803820819288940, guid: aa0a087fc96a7b64dab2c51113046ef2, type: 3}
+      propertyPath: movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: d28afcd5721b0e643985886535ed7ed2, type: 2}
     - target: {fileID: 8916446929069091131, guid: aa0a087fc96a7b64dab2c51113046ef2, type: 3}
       propertyPath: m_Sprite
       value: 

@@ -211,6 +211,14 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4380452421922339188, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
+      propertyPath: enemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: ac6b8bb48837d1d49944d0cc8d9832be, type: 2}
+    - target: {fileID: 6858521639923260507, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
+      propertyPath: movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: cf3ed192bf6495b419c700dfad32dd94, type: 2}
     - target: {fileID: 7151542295393589514, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
       propertyPath: m_Name
       value: Grimonk_Brown

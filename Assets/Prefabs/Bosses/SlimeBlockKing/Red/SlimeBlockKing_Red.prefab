@@ -159,6 +159,14 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4380452421922339188, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
+      propertyPath: enemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: d8eec78798479fe4bb6eb46c65207e40, type: 2}
+    - target: {fileID: 6858521639923260507, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
+      propertyPath: movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: b6be6d74f5e88884197f316486245949, type: 2}
     - target: {fileID: 7151542295393589514, guid: 01cc7ffbb8ff7074f858d06bfc6873ae, type: 3}
       propertyPath: m_Name
       value: SlimeBlockKing_Red
