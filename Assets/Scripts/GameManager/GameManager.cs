@@ -34,6 +34,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private Player player;
 
     [HideInInspector] public GameState gameState;
+    [HideInInspector] public GameState previousGameState;
 
     protected override void Awake()
     {
@@ -71,6 +72,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     // Start is called before the first frame update
     private void Start()
     {
+        previousGameState = GameState.gameStarted;
         gameState = GameState.gameStarted;
     }
 
@@ -133,16 +135,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         return playerDetails.playerMiniMapIcon;
     }
 
+    public DungeonLevelScriptableObject GetCurrentDungeonLevel()
+    {
+        return dungeonLevelList[currentDungeonLevelListIndex];
+    }
+
     #region Validation
-
 #if UNITY_EDITOR
-
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
     }
-
 #endif
-
     #endregion Validation
 }

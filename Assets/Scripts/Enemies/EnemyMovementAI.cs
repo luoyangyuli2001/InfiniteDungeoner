@@ -18,8 +18,7 @@ public class EnemyMovementAI : MonoBehaviour
     private WaitForFixedUpdate waitForFixedUpdate;
     [HideInInspector] public float moveSpeed;
     private bool chasePlayer = false;
-    // [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
-    // private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
+    [HideInInspector] public int updateFrameNumber = 1;
 
     private void Awake()
     {
@@ -47,6 +46,7 @@ public class EnemyMovementAI : MonoBehaviour
         }
         if (!chasePlayer)
             return;
+        if (Time.frameCount % Settings.targetFrameRateToSpreadPathfindingOver != updateFrameNumber) return;
         if (currentEnemyPathRebuildCooldown <= 0f || (Vector3.Distance(playerReferencePosition, GameManager.Instance.GetPlayer().GetPlayerPosition()) > Settings.playerMoveDistanceToRebuildPath))
         {
             currentEnemyPathRebuildCooldown = Settings.enemyPathRebuildCooldown;
@@ -133,6 +133,10 @@ public class EnemyMovementAI : MonoBehaviour
         }
     }
 
+    public void SetUpdateFrameNumber(int updateFrameNumber)
+    {
+        this.updateFrameNumber = updateFrameNumber;
+    }
 
     #region Validation
 #if UNITY_EDITOR
