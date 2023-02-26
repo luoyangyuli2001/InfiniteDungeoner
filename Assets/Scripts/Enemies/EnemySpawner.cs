@@ -51,7 +51,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
     private void SpawnEnemies()
     {
-        if (GameManager.Instance.gameState == GameState.playingLevel)
+        if (GameManager.Instance.gameState == GameState.bossStage)
+        {
+            GameManager.Instance.previousGameState = GameState.bossStage;
+            GameManager.Instance.gameState = GameState.engagingBoss;
+        }
+        else if (GameManager.Instance.gameState == GameState.playingLevel)
         {
             GameManager.Instance.previousGameState = GameState.playingLevel;
             GameManager.Instance.gameState = GameState.engagingEnemies;
@@ -102,6 +107,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     {
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
         currentEnemyCount--;
+        StaticEventHandler.CallPointsScoredEvent(destroyedEventArgs.points);
         if (currentEnemyCount <= 0 && enemiesSpawnedSoFar == enemiesToSpawn)
         {
             currentRoom.isClearedOfEnemies = true;

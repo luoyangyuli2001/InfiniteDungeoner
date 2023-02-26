@@ -452,18 +452,16 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         foreach (KeyValuePair<string, Room> keyvaluepair in dungeonBuilderRoomDictionary)
         {
             Room room = keyvaluepair.Value;
-
             Vector3 roomPosition = new Vector3(room.lowerBounds.x - room.templateLowerBounds.x, room.lowerBounds.y - room.templateLowerBounds.y, 0f);
-
             GameObject roomGameobject = Instantiate(room.prefab, roomPosition, Quaternion.identity, transform);
-
             InstantiatedRoom instantiatedRoom = roomGameobject.GetComponentInChildren<InstantiatedRoom>();
-
             instantiatedRoom.room = room;
-
             instantiatedRoom.Initialize(roomGameobject);
-
             room.instantiatedRoom = instantiatedRoom;
+            // if(!room.roomNodeType.isBossRoom)
+            // {
+            //     room.isClearedOfEnemies = true;
+            // }
         }
     }
 

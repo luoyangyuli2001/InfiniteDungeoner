@@ -1,31 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
-    #region Header DUNGEON LEVELS
+    #region Header GAMEOBJECT REFERENCES
+    [Space(10)]
+    [Header("GAMEOBJECT REFERENCES")]
+    #endregion Header GAMEOBJECT REFERENCES
 
+    #region Tooltip
+    [Tooltip("Populate with the MessageText textmeshpro component in the FadeScreenUI")]
+    #endregion Tooltip
+    [SerializeField] private TextMeshProUGUI messageTextTMP;
+
+    #region Tooltip
+    [Tooltip("Populate with the FadeImage canvasgroup component in the FadeScreenUI")]
+    #endregion Tooltip
+    [SerializeField] private CanvasGroup canvasGroup;
+
+    #region Header DUNGEON LEVELS
     [Space(10)]
     [Header("DUNGEON LEVELS")]
-
     #endregion Header DUNGEON LEVELS
 
     #region Tooltip
-
     [Tooltip("Populate with the dungeon level scriptable objects")]
-
     #endregion Tooltip
-
     [SerializeField] private List<DungeonLevelScriptableObject> dungeonLevelList;
 
     #region Tooltip
-
     [Tooltip("Populate with the starting dungeon level for testing , first level = 0")]
-
     #endregion Tooltip
-
     [SerializeField] private int currentDungeonLevelListIndex = 0;
 
     private Room currentRoom;
@@ -35,6 +45,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     [HideInInspector] public GameState gameState;
     [HideInInspector] public GameState previousGameState;
+    private long gameScore;
+    private int scoreMultiplier;
+    private InstantiatedRoom bossRoom;
 
     protected override void Awake()
     {
@@ -48,16 +61,55 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void OnEnable()
     {
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+        StaticEventHandler.OnRoomEnemiesDefeated += StaticEventHandler_OnRoomEnemiesDefeated;
+        StaticEventHandler.OnPointsScored += StaticEventHandler_OnPointsScored;
+        StaticEventHandler.OnMultiplier += StaticEventHandler_OnMultiplier;
+        player.destroyedEvent.OnDestroyed += Player_OnDestroyed;
     }
 
     private void OnDisable()
     {
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+        StaticEventHandler.OnRoomEnemiesDefeated -= StaticEventHandler_OnRoomEnemiesDefeated;
+        StaticEventHandler.OnPointsScored -= StaticEventHandler_OnPointsScored;
+        StaticEventHandler.OnMultiplier -= StaticEventHandler_OnMultiplier;
+        player.destroyedEvent.OnDestroyed -= Player_OnDestroyed;
     }
 
     private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
         SetCurrentRoom(roomChangedEventArgs.room);
+    }
+
+    private void StaticEventHandler_OnRoomEnemiesDefeated(RoomEnemiesDefeatedArgs roomEnemiesDefeatedArgs)
+    {
+        RoomEnemiesDefeated();
+    }
+
+    private void StaticEventHandler_OnPointsScored(PointsScoredArgs pointsScoredArgs)
+    {
+        gameScore += pointsScoredArgs.points * scoreMultiplier;
+        StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
+    }
+
+    private void StaticEventHandler_OnMultiplier(MultiplierArgs multiplierArgs)
+    {
+        if (multiplierArgs.multiplier)
+        {
+            scoreMultiplier++;
+        }
+        else
+        {
+            scoreMultiplier--;
+        }
+        scoreMultiplier = Mathf.Clamp(scoreMultiplier, 1, 30);
+        StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
+    }
+
+    private void Player_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
+    {
+        previousGameState = gameState;
+        gameState = GameState.gameLost;
     }
 
     private void InstantiatePlayer()
@@ -69,11 +121,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.Initialize(playerDetails);
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         previousGameState = GameState.gameStarted;
         gameState = GameState.gameStarted;
+        gameScore = 0;
+        scoreMultiplier = 1;
+        StartCoroutine(Fade(0f,1f,0f,Color.black));
     }
 
     // Update is called once per frame
@@ -94,6 +148,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             case GameState.gameStarted:
                 PlayDungeonLevel(currentDungeonLevelListIndex);
                 gameState = GameState.playingLevel;
+                RoomEnemiesDefeated();
+                break;
+            case GameState.levelCompleted:
+                StartCoroutine(LevelCompleted());
+                break;
+            case GameState.gameWon:
+                if(previousGameState != GameState.gameWon) StartCoroutine(GameWon());
+                break;
+            case GameState.gameLost:
+                if(previousGameState != GameState.gameLost) StartCoroutine(GameLost());
+                break;
+            case GameState.restartGame:
+                RestartGame();
                 break;
         }
     }
@@ -112,6 +179,154 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     
         player.gameObject.transform.position = HelperUtilities.GetSpawnPositionNearestToPlayer(player.gameObject.transform.position);
 
+        StartCoroutine(DisplayDungeonLevelText());
+
+        // RoomEnemiesDefeated();
+    }
+
+    private IEnumerator DisplayDungeonLevelText()
+    {
+        StartCoroutine(Fade(0f, 1f, 0f, Color.black));
+        GetPlayer().playerControl.DisablePlayer();
+        string messageText = "LEVEL " + (currentDungeonLevelListIndex + 1).ToString() + "\n\n" + dungeonLevelList[currentDungeonLevelListIndex].levelName.ToUpper();
+        yield return StartCoroutine(DisplayMessageRoutine(messageText, Color.white, 2f));
+        GetPlayer().playerControl.EnablePlayer();
+        yield return StartCoroutine(Fade(1f, 0f, 2f, Color.black));
+    }
+
+    private IEnumerator DisplayMessageRoutine(string text, Color textColor, float displaySeconds)
+    {
+        messageTextTMP.SetText(text);
+        messageTextTMP.color = textColor;
+        if (displaySeconds > 0f)
+        {
+            float timer = displaySeconds;
+            while (timer > 0f && !Input.GetKeyDown(KeyCode.Return))
+            {
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        {
+            while (!Input.GetKeyDown(KeyCode.Return))
+            {
+                yield return null;
+            }
+        }
+        yield return null;
+        messageTextTMP.SetText("");
+    }
+
+    private void RoomEnemiesDefeated()
+    {
+        bool isDungeonClearOfRegularEnemies = true;
+        bossRoom = null;
+        foreach (KeyValuePair<string, Room> keyValuePair in DungeonBuilder.Instance.dungeonBuilderRoomDictionary)
+        {
+            if (keyValuePair.Value.roomNodeType.isBossRoom)
+            {
+                bossRoom = keyValuePair.Value.instantiatedRoom;
+                continue;
+            }
+            if (!keyValuePair.Value.isClearedOfEnemies)
+            {
+                isDungeonClearOfRegularEnemies = false;
+                break;
+            }
+        }
+
+        if ((isDungeonClearOfRegularEnemies && bossRoom == null) || (isDungeonClearOfRegularEnemies && bossRoom.room.isClearedOfEnemies))
+        {
+            if (currentDungeonLevelListIndex < dungeonLevelList.Count - 1)
+            {
+                gameState = GameState.levelCompleted;
+            }
+            else
+            {
+                gameState = GameState.gameWon;
+            }
+        }
+        else if (isDungeonClearOfRegularEnemies)
+        {
+            gameState = GameState.bossStage;
+            StartCoroutine(BossStage());
+        }
+
+    }
+
+    private IEnumerator BossStage()
+    {
+        bossRoom.gameObject.SetActive(true);
+        bossRoom.UnlockDoors(0f);
+        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(Fade(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE  " + GameResources.Instance.currentPlayer.playerName + "!  YOU'VE SURVIVED ....SO FAR\n\nNOW FIND AND DEFEAT THE BOSS....GOOD LUCK!", Color.white, 5f));
+        yield return StartCoroutine(Fade(1f, 0f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+    }
+
+    private IEnumerator LevelCompleted()
+    {
+        gameState = GameState.playingLevel;
+
+        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(Fade(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE " + GameResources.Instance.currentPlayer.playerName + "! \n\nYOU'VE SURVIVED THIS DUNGEON LEVEL", Color.white, 5f));
+        yield return StartCoroutine(DisplayMessageRoutine("COLLECT ANY LOOT ....THEN PRESS RETURN\n\nTO DESCEND FURTHER INTO THE DUNGEON", Color.white, 5f));
+        yield return StartCoroutine(Fade(1f, 0f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        }
+        yield return null;
+        currentDungeonLevelListIndex++;
+        PlayDungeonLevel(currentDungeonLevelListIndex);
+    }
+
+    public IEnumerator Fade(float startFadeAlpha, float targetFadeAlpha, float fadeSeconds, Color backgroundColor)
+    {
+        Image image = canvasGroup.GetComponent<Image>();
+        image.color = backgroundColor;
+        float time = 0;
+        while (time <= fadeSeconds)
+        {
+            time += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startFadeAlpha, targetFadeAlpha, time / fadeSeconds);
+            yield return null;
+        }
+    }
+
+    private IEnumerator GameWon()
+    {
+        previousGameState = GameState.gameWon;
+        GetPlayer().playerControl.DisablePlayer();
+        yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE " + GameResources.Instance.currentPlayer.playerName + "! YOU HAVE DEFEATED THE DUNGEON", Color.white, 3f));
+        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0"), Color.white, 4f));
+        yield return StartCoroutine(DisplayMessageRoutine("PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
+        gameState = GameState.restartGame;
+    }
+
+    private IEnumerator GameLost()
+    {
+        previousGameState = GameState.gameLost;
+        GetPlayer().playerControl.DisablePlayer();
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
+        Enemy[] enemyArray = GameObject.FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemyArray)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+        yield return StartCoroutine(DisplayMessageRoutine("BAD LUCK " + GameResources.Instance.currentPlayer.playerName + "! YOU HAVE SUCCUMBED TO THE DUNGEON", Color.white, 2f));
+        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0"), Color.white, 4f));
+        yield return StartCoroutine(DisplayMessageRoutine("PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
+        gameState = GameState.restartGame;
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene("MainGameScene");
     }
 
     public Room GetCurrentRoom()
@@ -144,6 +359,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(messageTextTMP), messageTextTMP);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(canvasGroup), canvasGroup);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
     }
 #endif
