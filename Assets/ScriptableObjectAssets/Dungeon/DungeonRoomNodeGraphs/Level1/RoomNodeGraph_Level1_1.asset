@@ -23,7 +23,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 206
-    y: 484.66666
+    y: 483.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1393
-    y: 599.6666
+    y: 598.6666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 613
-    y: 342.66666
+    y: 341.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 214
-    y: 342.99997
+    y: 341.99997
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 212
-    y: 640.6666
+    y: 639.6666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1396
-    y: 360.66666
+    y: 359.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1404
-    y: 496.66663
+    y: 495.66663
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1204
-    y: 355.66666
+    y: 354.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 619
-    y: 229.66666
+    y: 228.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 993
-    y: 583.6666
+    y: 582.6666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1013
-    y: 360.66666
+    y: 359.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1003
-    y: 230.66666
+    y: 229.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -392,7 +392,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 1182
-    y: 594.6666
+    y: 593.6666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -420,7 +420,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 815
-    y: 348.66666
+    y: 347.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -447,7 +447,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 993
-    y: 132.66666
+    y: 131.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -474,7 +474,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 633
-    y: 123.66666
+    y: 122.66666
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -502,7 +502,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 427
-    y: 344.66666
+    y: 343.66666
     width: 160
     height: 75
   isLeftClickDragging: 0

@@ -19,6 +19,7 @@ public class EnemyMovementAI : MonoBehaviour
     [HideInInspector] public float moveSpeed;
     private bool chasePlayer = false;
     [HideInInspector] public int updateFrameNumber = 1;
+    private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
     private void Awake()
     {
@@ -102,34 +103,41 @@ public class EnemyMovementAI : MonoBehaviour
         Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
         Vector3Int playerCellPosition = currentRoom.instantiatedRoom.grid.WorldToCell(playerPosition);
         Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x - currentRoom.templateLowerBounds.x, playerCellPosition.y - currentRoom.templateLowerBounds.y);
-        int obstacle = currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
+        int obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
         if (obstacle != 0)
         {
             return playerCellPosition;
         }
         else
         {
+            surroundingPositionList.Clear();
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
                 {
                     if (j == 0 && i == 0) continue;
-                    try
-                    {
-                        obstacle = currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x + i, adjustedPlayerCellPositon.y + i];
-                        if (obstacle != 0)
-                        {
-                            return new Vector3Int(playerCellPosition.x + i, playerCellPosition.y + j, 0);
-                        }
 
-                    }
-                    catch
-                    {
-                        continue;
-                    }
+                    surroundingPositionList.Add(new Vector2Int(i, j));
                 }
             }
-            return playerCellPosition;
+            for (int l = 0; l < 8; l++)
+            {
+                int index = Random.Range(0, surroundingPositionList.Count);
+                try
+                {
+                    obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
+                    if (obstacle != 0)
+                    {
+                        return new Vector3Int(playerCellPosition.x + surroundingPositionList[index].x, playerCellPosition.y + surroundingPositionList[index].y, 0);
+                    }
+                }
+                catch
+                {
+
+                }
+                surroundingPositionList.RemoveAt(index);
+            }
+            return (Vector3Int)currentRoom.spawnPositionArray[Random.Range(0, currentRoom.spawnPositionArray.Length)];
         }
     }
 

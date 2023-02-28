@@ -16,15 +16,30 @@ public class InstantiatedRoom : MonoBehaviour
     [HideInInspector] public Tilemap collisionTilemap;
     [HideInInspector] public Tilemap minimapTilemap;
     [HideInInspector] public int[,] aStarMovementPenalty;
+    [HideInInspector] public int[,] aStarItemObstacles;
     [HideInInspector] public Bounds roomColliderBounds;
+    [HideInInspector] public List<MoveableItem> moveableItemsList = new List<MoveableItem>();
+
+    #region Header OBJECT REFERENCES
+    [Space(10)]
+    [Header("OBJECT REFERENCES")]
+    #endregion Header OBJECT REFERENCES
+    #region Tooltip
+    [Tooltip("Populate with the environment child placeholder gameobject ")]
+    #endregion Tooltip
+    [SerializeField] private GameObject environmentGameObject;
 
     private BoxCollider2D boxCollider2D;
 
     private void Awake()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
-
         roomColliderBounds = boxCollider2D.bounds;
+    }
+
+    private void Start()
+    {
+        UpdateMoveableObstacles();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,19 +51,20 @@ public class InstantiatedRoom : MonoBehaviour
         }
     }
 
-    public void Initialize(GameObject roomGameObject)
+    public void Initialize(GameObject roomGameobject)
     {
-        PopulateTilemapMemberVariables(roomGameObject);
+        PopulateTilemapMemberVariables(roomGameobject);
         BlockOffUnusedDoorWays();
         AddObstaclesAndPreferredPaths();
+        CreateItemObstaclesArray();
         AddDoorsToRooms();
         DisableCollisionTilemapRenderer();
     }
 
-    private void PopulateTilemapMemberVariables(GameObject roomGameObject)
+    private void PopulateTilemapMemberVariables(GameObject roomGameobject)
     {
-        grid = roomGameObject.GetComponentInChildren<Grid>();
-        Tilemap[] tilemaps = roomGameObject.GetComponentsInChildren<Tilemap>();
+        grid = roomGameobject.GetComponentInChildren<Grid>();
+        Tilemap[] tilemaps = roomGameobject.GetComponentsInChildren<Tilemap>();
         foreach (Tilemap tilemap in tilemaps)
         {
             if (tilemap.gameObject.tag == "groundTilemap")
@@ -78,43 +94,32 @@ public class InstantiatedRoom : MonoBehaviour
         }
     }
 
-    private void DisableCollisionTilemapRenderer()
-    {
-        collisionTilemap.gameObject.GetComponent<TilemapRenderer>().enabled = false;
-    }
-
     private void BlockOffUnusedDoorWays()
     {
         foreach (Doorway doorway in room.doorWayList)
         {
             if (doorway.isConnected)
                 continue;
-
             if (collisionTilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(collisionTilemap, doorway);
             }
-
             if (minimapTilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(minimapTilemap, doorway);
             }
-
             if (groundTilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(groundTilemap, doorway);
             }
-
             if (decoration1Tilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(decoration1Tilemap, doorway);
             }
-
             if (decoration2Tilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(decoration2Tilemap, doorway);
             }
-
             if (frontTilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(frontTilemap, doorway);
@@ -130,12 +135,10 @@ public class InstantiatedRoom : MonoBehaviour
             case Orientation.south:
                 BlockDoorwayHorizontally(tilemap, doorway);
                 break;
-
             case Orientation.east:
             case Orientation.west:
                 BlockDoorwayVertically(tilemap, doorway);
                 break;
-
             case Orientation.none:
                 break;
         }
@@ -172,25 +175,23 @@ public class InstantiatedRoom : MonoBehaviour
     private void AddObstaclesAndPreferredPaths()
     {
         aStarMovementPenalty = new int[room.templateUpperBounds.x - room.templateLowerBounds.x + 1, room.templateUpperBounds.y - room.templateLowerBounds.y + 1];
-        for(int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
+        for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
         {
             for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)
             {
-                aStarMovementPenalty[x,y] = Settings.defaultAStarMovementPenalty;
+                aStarMovementPenalty[x, y] = Settings.defaultAStarMovementPenalty;
                 TileBase tile = collisionTilemap.GetTile(new Vector3Int(x + room.templateLowerBounds.x, y + room.templateLowerBounds.y, 0));
-
-                foreach(TileBase collisionTile in GameResources.Instance.enemyUnwalkableCollisionTilesArray)
+                foreach (TileBase collisionTile in GameResources.Instance.enemyUnwalkableCollisionTilesArray)
                 {
-                    if(tile == collisionTile)
+                    if (tile == collisionTile)
                     {
-                        aStarMovementPenalty[x,y] = 0;
+                        aStarMovementPenalty[x, y] = 0;
                         break;
                     }
                 }
-
                 if (tile == GameResources.Instance.preferredEnemyPathTile)
                 {
-                    aStarMovementPenalty[x,y] = Settings.preferredPathAStarMovementPenalty;
+                    aStarMovementPenalty[x, y] = Settings.preferredPathAStarMovementPenalty;
                 }
             }
         }
@@ -199,7 +200,6 @@ public class InstantiatedRoom : MonoBehaviour
     private void AddDoorsToRooms()
     {
         if (room.roomNodeType.isCorridorEW || room.roomNodeType.isCorridorNS) return;
-
         foreach (Doorway doorway in room.doorWayList)
         {
             if (doorway.doorPrefab != null && doorway.isConnected)
@@ -228,7 +228,7 @@ public class InstantiatedRoom : MonoBehaviour
                 }
 
                 Door doorComponent = door.GetComponent<Door>();
-                if(room.roomNodeType.isBossRoom)
+                if (room.roomNodeType.isBossRoom)
                 {
                     doorComponent.isBossRoomDoor = true;
                     doorComponent.LockDoor();
@@ -237,14 +237,31 @@ public class InstantiatedRoom : MonoBehaviour
         }
     }
 
+    private void DisableCollisionTilemapRenderer()
+    {
+        collisionTilemap.gameObject.GetComponent<TilemapRenderer>().enabled = false;
+    }
+
     public void DisableRoomCollider()
     {
-        boxCollider2D.enabled = false;        
+        boxCollider2D.enabled = false;
     }
 
     public void EnableRoomCollider()
     {
         boxCollider2D.enabled = true;
+    }
+
+    public void ActivateEnvironmentGameObjects()
+    {
+        if (environmentGameObject != null)
+            environmentGameObject.SetActive(true);
+    }
+
+    public void DeactivateEnvironmentGameObjects()
+    {
+        if (environmentGameObject != null)
+            environmentGameObject.SetActive(false);
     }
 
     public void LockDoors()
@@ -277,4 +294,69 @@ public class InstantiatedRoom : MonoBehaviour
 
         EnableRoomCollider();
     }
+
+    private void CreateItemObstaclesArray()
+    {
+        aStarItemObstacles = new int[room.templateUpperBounds.x - room.templateLowerBounds.x + 1, room.templateUpperBounds.y - room.templateLowerBounds.y + 1];
+    }
+
+    private void InitializeItemObstaclesArray()
+    {
+        for (int x = 0; x < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); x++)
+        {
+            for (int y = 0; y < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); y++)
+            {
+                // Set default movement penalty for grid sqaures
+                aStarItemObstacles[x, y] = Settings.defaultAStarMovementPenalty;
+            }
+        }
+    }
+
+    public void UpdateMoveableObstacles()
+    {
+        InitializeItemObstaclesArray();
+        foreach (MoveableItem moveItem in moveableItemsList)
+        {
+            Vector3Int colliderBoundsMin = grid.WorldToCell(moveItem.boxCollider2D.bounds.min);
+            Vector3Int colliderBoundsMax = grid.WorldToCell(moveItem.boxCollider2D.bounds.max);
+            for (int i = colliderBoundsMin.x; i <= colliderBoundsMax.x; i++)
+            {
+                for (int j = colliderBoundsMin.y; j <= colliderBoundsMax.y; j++)
+                {
+                    aStarItemObstacles[i - room.templateLowerBounds.x, j - room.templateLowerBounds.y] = 0;
+                }
+            }
+        }
+    }
+
+    // private void OnDrawGizmos()
+    // {
+
+    //    for (int i = 0; i < (room.templateUpperBounds.x - room.templateLowerBounds.x + 1); i++)
+    //    {
+    //        for (int j = 0; j < (room.templateUpperBounds.y - room.templateLowerBounds.y + 1); j++)
+    //        {
+    //            if (aStarItemObstacles[i, j] == 0)
+    //            {
+    //                Vector3 worldCellPos = grid.CellToWorld(new Vector3Int(i + room.templateLowerBounds.x, j + room.templateLowerBounds.y, 0));
+
+    //                Gizmos.DrawWireCube(new Vector3(worldCellPos.x + 0.5f, worldCellPos.y + 0.5f, 0), Vector3.one);
+    //            }
+    //        }
+    //    }
+
+    // }
+
+    #region Validation
+
+#if UNITY_EDITOR
+
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(environmentGameObject), environmentGameObject);
+    }
+
+#endif
+
+    #endregion Validation
 }
