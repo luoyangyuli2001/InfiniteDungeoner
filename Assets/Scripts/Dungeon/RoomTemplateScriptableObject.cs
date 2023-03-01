@@ -18,6 +18,21 @@ public class RoomTemplateScriptableObject : ScriptableObject
     public GameObject prefab;
     [HideInInspector] public GameObject previousPrefab;
 
+    #region Header ROOM MUSIC
+    [Space(10)]
+    [Header("ROOM MUSIC")]
+    #endregion Header ROOM MUSIC
+
+    #region Tooltip
+    [Tooltip("The battle music scriptable object when whe room hasn't been cleared of enemies")]
+    #endregion Tooltip
+    public MusicTrackScriptableObject battleMusic;
+
+     #region Tooltip
+    [Tooltip("Ambient music scriptable object when whe room has been cleared of enemies")]
+    #endregion Tooltip
+    public MusicTrackScriptableObject ambientMusic;
+
     #region Header ROOM CONFIGURATION
     [Space(10)]
     [Header("ROOM CONFIGURATION")]
@@ -78,6 +93,8 @@ public class RoomTemplateScriptableObject : ScriptableObject
             previousPrefab = prefab;
             EditorUtility.SetDirty(this);
         }
+        HelperUtilities.ValidateCheckNullValue(this, nameof(battleMusic), battleMusic);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(ambientMusic), ambientMusic);
         HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
         HelperUtilities.ValidateCheckNullValue(this, nameof(roomNodeType), roomNodeType);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);

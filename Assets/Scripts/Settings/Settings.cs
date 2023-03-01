@@ -56,6 +56,11 @@ public static class Settings
     public const float useAimAngleDistance = 3.5f;
     #endregion
 
+    #region AUDIO
+    public const float musicFadeOutTime = 0.5f;
+    public const float musicFadeInTime = 0.5f;
+    #endregion
+
     #region ASTAR PATHFINDING PARAMETERS
     public const int defaultAStarMovementPenalty = 40;
     public const int preferredPathAStarMovementPenalty = 1;

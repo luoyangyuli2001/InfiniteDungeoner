@@ -72,6 +72,27 @@ public class GameResources : MonoBehaviour
     #endregion
     public SoundEffectScriptableObject ammoPickup;
 
+    #region Header MUSIC
+    [Space(10)]
+    [Header("MUSIC")]
+    #endregion Header MUSIC
+    #region Tooltip
+    [Tooltip("Populate with the music master mixer group")]
+    #endregion
+    public AudioMixerGroup musicMasterMixerGroup;
+    #region Tooltip
+    [Tooltip("music on full snapshot")]
+    #endregion Tooltip
+    public AudioMixerSnapshot musicOnFullSnapshot;
+    #region Tooltip
+    [Tooltip("music low snapshot")]
+    #endregion Tooltip
+    public AudioMixerSnapshot musicLowSnapshot;
+    #region Tooltip
+    [Tooltip("music off snapshot")]
+    #endregion Tooltip
+    public AudioMixerSnapshot musicOffSnapshot;
+
     #region Header MATERIALS
     [Space(10)]
     [Header("MATERIALS")]
@@ -174,6 +195,11 @@ public class GameResources : MonoBehaviour
         HelperUtilities.ValidateCheckNullValue(this, nameof(heartIcon), heartIcon);
         HelperUtilities.ValidateCheckNullValue(this, nameof(bulletIcon), bulletIcon);
         HelperUtilities.ValidateCheckNullValue(this, nameof(minimapSkullPrefab), minimapSkullPrefab);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicMasterMixerGroup), musicMasterMixerGroup);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicOnFullSnapshot), musicOnFullSnapshot);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicLowSnapshot), musicLowSnapshot);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(musicOffSnapshot), musicOffSnapshot); 
+
     }
 #endif
     #endregion
