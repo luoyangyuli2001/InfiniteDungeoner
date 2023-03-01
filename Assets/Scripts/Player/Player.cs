@@ -130,4 +130,13 @@ public class Player : MonoBehaviour
     {
         return transform.position;
     }
+
+    public bool IsWeaponHeldByPlayer(WeaponDetailsScriptableObject weaponDetails)
+    {
+        foreach (Weapon weapon in weaponList)
+        {
+            if (weapon.weaponDetails == weaponDetails) return true;
+        }
+        return false;
+    }
 }

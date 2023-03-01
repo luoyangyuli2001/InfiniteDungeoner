@@ -48,6 +48,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private long gameScore;
     private int scoreMultiplier;
     private InstantiatedRoom bossRoom;
+    private bool isFading = false;
 
     protected override void Awake()
     {
@@ -149,6 +150,24 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 PlayDungeonLevel(currentDungeonLevelListIndex);
                 gameState = GameState.playingLevel;
                 RoomEnemiesDefeated();
+                break;
+            case GameState.playingLevel:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    DisplayDungeonOverviewMap();
+                }
+                break;
+            case GameState.dungeonOverviewMap:
+                if (Input.GetKeyUp(KeyCode.Tab))
+                {
+                    Map.Instance.ClearDungeonOverViewMap();
+                }
+                break;
+            case GameState.bossStage:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    DisplayDungeonOverviewMap();
+                }
                 break;
             case GameState.levelCompleted:
                 StartCoroutine(LevelCompleted());
@@ -255,6 +274,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     }
 
+    private void DisplayDungeonOverviewMap()
+    {
+        if (isFading) return;
+        Map.Instance.DisplayDungeonOverViewMap();
+    }   
+
     private IEnumerator BossStage()
     {
         bossRoom.gameObject.SetActive(true);
@@ -285,6 +310,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public IEnumerator Fade(float startFadeAlpha, float targetFadeAlpha, float fadeSeconds, Color backgroundColor)
     {
+        isFading = true;
         Image image = canvasGroup.GetComponent<Image>();
         image.color = backgroundColor;
         float time = 0;
@@ -294,6 +320,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             canvasGroup.alpha = Mathf.Lerp(startFadeAlpha, targetFadeAlpha, time / fadeSeconds);
             yield return null;
         }
+        isFading = false;
     }
 
     private IEnumerator GameWon()

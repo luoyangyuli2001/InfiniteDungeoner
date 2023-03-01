@@ -84,9 +84,9 @@ public class Ammo : MonoBehaviour, IFireable
             {
                 StaticEventHandler.CallMultiplierEvent(true);
             }
-            else
+            else if(!enemyHit)
             {
-                StaticEventHandler.CallMultiplierEvent(false);
+                StaticEventHandler.CallMultiplierEvent(false);               
             }
         }
     }
