@@ -45,6 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomNodeTypeList: {fileID: 11400000, guid: a273bed73cdfd1241a178ab6ba3d60ea, type: 2}
+  playerSelectionPrefab: {fileID: 4051589953941729194, guid: fbd828148c0ba0f47a11591a0290bd69, type: 3}
+  playerDetailsList:
+  - {fileID: 11400000, guid: d75985c8a76588b4784afd41a0ea6296, type: 2}
+  - {fileID: 11400000, guid: 3ad4922236d72a54ba96860c50534285, type: 2}
+  - {fileID: 11400000, guid: eb2e4787bde247e4989f0d411376b455, type: 2}
   currentPlayer: {fileID: 11400000, guid: 57aed68dcd18bc046ae123b6218dec02, type: 2}
   soundsMasterMixerGroup: {fileID: -4734643798044506327, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   doorOpenCloseSoundEffect: {fileID: 11400000, guid: d0e910e0589c40f4a9156487872f0a3c, type: 2}
@@ -57,6 +62,7 @@ MonoBehaviour:
   musicOnFullSnapshot: {fileID: 24500006, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   musicLowSnapshot: {fileID: 8893122114324796974, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   musicOffSnapshot: {fileID: -3084740370723268673, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
+  mainMenuMusic: {fileID: 11400000, guid: 9e8dd01c42e760f418577c17986e760b, type: 2}
   dimmedMaterial: {fileID: 2100000, guid: fd5ae752e16da36428c7ae98c49dc19e, type: 2}
   litMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   variableLitShader: {fileID: -6465566751694194690, guid: 304a236819d488f409a1dfccdc33ea46, type: 3}
@@ -67,6 +73,7 @@ MonoBehaviour:
   preferredEnemyPathTile: {fileID: 11400000, guid: 3ce5fb260af53d24887b55c3d50041e2, type: 2}
   ammoIconPrefab: {fileID: 8812515487679575392, guid: 34aac6a016bf33b45a089a97f45008dd, type: 3}
   heartPrefab: {fileID: 624387503191153558, guid: f8a5852f143ad5a46bf831bb1e0bd441, type: 3}
+  scorePrefab: {fileID: 869781533525557324, guid: 0a259579dc0835f4a84506bbf96672ab, type: 3}
   chestItemPrefab: {fileID: 4341314992493814856, guid: 9c522a4b841d6714cacf48f1b9bc0c59, type: 3}
   heartIcon: {fileID: 21300000, guid: 93356131eec0f44458223985928ac6e3, type: 3}
   bulletIcon: {fileID: 21300000, guid: a2482871b46d396438236c07b6402283, type: 3}

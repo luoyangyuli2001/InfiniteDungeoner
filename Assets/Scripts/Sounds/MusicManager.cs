@@ -33,8 +33,6 @@ public class MusicManager : SingletonMonobehaviour<MusicManager>
         PlayerPrefs.SetInt("musicVolume", musicVolume);
     }
 
-
-
     public void PlayMusic(MusicTrackScriptableObject musicTrack, float fadeOutTime = Settings.musicFadeOutTime, float fadeInTime = Settings.musicFadeInTime)
     {
         StartCoroutine(PlayMusicRoutine(musicTrack, fadeOutTime, fadeInTime));

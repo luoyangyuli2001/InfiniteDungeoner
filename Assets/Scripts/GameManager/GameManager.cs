@@ -14,6 +14,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #endregion Header GAMEOBJECT REFERENCES
 
     #region Tooltip
+    [Tooltip("Populate with pause menu gameobject in hierarchy")]
+    #endregion Tooltip
+    [SerializeField] private GameObject pauseMenu;
+
+    #region Tooltip
     [Tooltip("Populate with the MessageText textmeshpro component in the FadeScreenUI")]
     #endregion Tooltip
     [SerializeField] private TextMeshProUGUI messageTextTMP;
@@ -152,9 +157,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 RoomEnemiesDefeated();
                 break;
             case GameState.playingLevel:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGameMenu();
+                }
                 if (Input.GetKeyDown(KeyCode.Tab))
                 {
                     DisplayDungeonOverviewMap();
+                }
+                break;
+            case GameState.engagingEnemies:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGameMenu();
                 }
                 break;
             case GameState.dungeonOverviewMap:
@@ -164,9 +179,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 }
                 break;
             case GameState.bossStage:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGameMenu();
+                }
                 if (Input.GetKeyDown(KeyCode.Tab))
                 {
                     DisplayDungeonOverviewMap();
+                }
+                break;
+            case GameState.engagingBoss:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGameMenu();
                 }
                 break;
             case GameState.levelCompleted:
@@ -181,6 +206,30 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             case GameState.restartGame:
                 RestartGame();
                 break;
+            case GameState.gamePaused:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    PauseGameMenu();
+                }
+                break;
+        }
+    }
+
+    public void PauseGameMenu()
+    {
+        if (gameState != GameState.gamePaused)
+        {
+            pauseMenu.SetActive(true);
+            GetPlayer().playerControl.DisablePlayer();
+            previousGameState = gameState;
+            gameState = GameState.gamePaused;
+        }
+        else if (gameState == GameState.gamePaused)
+        {
+            pauseMenu.SetActive(false);
+            GetPlayer().playerControl.EnablePlayer();
+            gameState = previousGameState;
+            previousGameState = GameState.gamePaused;
         }
     }
 
@@ -327,9 +376,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         previousGameState = GameState.gameWon;
         GetPlayer().playerControl.DisablePlayer();
+        int rank = HighScoreManager.Instance.GetRank(gameScore);
+        string rankText;
+        if (rank > 0 && rank <= Settings.numberOfHighScoresToSave)
+        {
+            rankText = "YOUR SCORE IS RANKED " + rank.ToString("#0") + " IN THE TOP " + Settings.numberOfHighScoresToSave.ToString("#0");
+            string name = GameResources.Instance.currentPlayer.playerName;
+            if (name == "")
+            {
+                name = playerDetails.playerCharacterName.ToUpper();
+            }
+            HighScoreManager.Instance.AddScore(new Score() { playerName = name, levelDescription = "LEVEL " + (currentDungeonLevelListIndex + 1).ToString() + " - " + GetCurrentDungeonLevel().levelName.ToUpper(), playerScore = gameScore }, rank);
+        }
+        else
+        {
+            rankText = "YOUR SCORE ISN'T RANKED IN THE TOP " + Settings.numberOfHighScoresToSave.ToString("#0");
+        }
+        yield return new WaitForSeconds(1f);
         yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
         yield return StartCoroutine(DisplayMessageRoutine("WELL DONE " + GameResources.Instance.currentPlayer.playerName + "! YOU HAVE DEFEATED THE DUNGEON", Color.white, 3f));
-        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0"), Color.white, 4f));
+        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0") + "\n\n" + rankText, Color.white, 4f));
         yield return StartCoroutine(DisplayMessageRoutine("PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
         gameState = GameState.restartGame;
     }
@@ -338,6 +404,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         previousGameState = GameState.gameLost;
         GetPlayer().playerControl.DisablePlayer();
+        int rank = HighScoreManager.Instance.GetRank(gameScore);
+        string rankText;
+        if (rank > 0 && rank <= Settings.numberOfHighScoresToSave)
+        {
+            rankText = "YOUR SCORE IS RANKED " + rank.ToString("#0") + " IN THE TOP " + Settings.numberOfHighScoresToSave.ToString("#0");
+            string name = GameResources.Instance.currentPlayer.playerName;
+            if (name == "")
+            {
+                name = playerDetails.playerCharacterName.ToUpper();
+            }
+            HighScoreManager.Instance.AddScore(new Score() { playerName = name, levelDescription = "LEVEL " + (currentDungeonLevelListIndex + 1).ToString() + " - " + GetCurrentDungeonLevel().levelName.ToUpper(), playerScore = gameScore }, rank);
+        }
+        else
+        {
+            rankText = "YOUR SCORE ISN'T RANKED IN THE TOP " + Settings.numberOfHighScoresToSave.ToString("#0");
+        }
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
         Enemy[] enemyArray = GameObject.FindObjectsOfType<Enemy>();
@@ -346,14 +428,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             enemy.gameObject.SetActive(false);
         }
         yield return StartCoroutine(DisplayMessageRoutine("BAD LUCK " + GameResources.Instance.currentPlayer.playerName + "! YOU HAVE SUCCUMBED TO THE DUNGEON", Color.white, 2f));
-        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0"), Color.white, 4f));
+        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0") + "\n\n" + rankText, Color.white, 4f));
         yield return StartCoroutine(DisplayMessageRoutine("PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
         gameState = GameState.restartGame;
     }
 
     private void RestartGame()
     {
-        SceneManager.LoadScene("MainGameScene");
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     public Room GetCurrentRoom()
@@ -386,6 +468,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(pauseMenu), pauseMenu);
         HelperUtilities.ValidateCheckNullValue(this, nameof(messageTextTMP), messageTextTMP);
         HelperUtilities.ValidateCheckNullValue(this, nameof(canvasGroup), canvasGroup);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);

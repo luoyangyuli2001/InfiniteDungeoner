@@ -56,6 +56,10 @@ PrefabInstance:
       value: ChestSpawner_EnemiesDefeated_BossRoom
       objectReference: {fileID: 0}
     - target: {fileID: 8871816961177378974, guid: 037504c48120c6e4aa7d6fda043a4f73, type: 3}
+      propertyPath: chestSpawnChanceMin
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8871816961177378974, guid: 037504c48120c6e4aa7d6fda043a4f73, type: 3}
       propertyPath: numberOfItemsToSpawnMin
       value: 3
       objectReference: {fileID: 0}
