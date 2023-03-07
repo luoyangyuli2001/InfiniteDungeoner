@@ -38,17 +38,19 @@ public class Ammo : MonoBehaviour, IFireable
             SetAmmoMaterial(ammoDetails.ammoMaterial);
             isAmmoMaterialSet = true;
         }
-
-        Vector3 distanceVector = fireDirectionVector * ammoSpeed * Time.deltaTime;
-        transform.position += distanceVector;
-        ammoRange -= distanceVector.magnitude;
-        if (ammoRange < 0f)
+        if (!overrideAmmoMovement)
         {
-            if(ammoDetails.isPlayerAmmo)
+            Vector3 distanceVector = fireDirectionVector * ammoSpeed * Time.deltaTime;
+            transform.position += distanceVector;
+            ammoRange -= distanceVector.magnitude;
+            if (ammoRange < 0f)
             {
-                StaticEventHandler.CallMultiplierEvent(false);
+                if (ammoDetails.isPlayerAmmo)
+                {
+                    StaticEventHandler.CallMultiplierEvent(false);
+                }
+                DisableAmmo();
             }
-            DisableAmmo();
         }
     }
 
