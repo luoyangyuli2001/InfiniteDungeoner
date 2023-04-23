@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: N22LaserBlaster
   weaponSprite: {fileID: 21300000, guid: e9d1276e0a6b9bf42b04b5470c7073fb, type: 3}
-  weaponShootPosition: {x: 1.323, y: 0.294, z: 0}
-  weaponCurrentAmmo: {fileID: 11400000, guid: 07d1a5a5c9675a947bcac2c5fc7538fc, type: 2}
-  weaponShootEffect: {fileID: 11400000, guid: 02da6773b2b503549a518a73bca0c62a, type: 2}
-  weaponFiringSoundEffect: {fileID: 11400000, guid: 63952668e4db67f4e8b66ceb788ab6c5, type: 2}
-  weaponReloadingSoundEffect: {fileID: 11400000, guid: 41b317e4171b55b4b9caae1b610f9471, type: 2}
+  weaponShootPosition: {x: 1.3, y: 0.294, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: 4b950b0aa747f6f4a97b9821de5836d0, type: 2}
+  weaponShootEffect: {fileID: 11400000, guid: 6a1c919f331b59d459e7e14025ed8a7e, type: 2}
+  weaponFiringSoundEffect: {fileID: 11400000, guid: 0ba84ae3e69a4f248b97e3ae16aeb46a, type: 2}
+  weaponReloadingSoundEffect: {fileID: 11400000, guid: e381635cdadee564a90a5e0a018d0122, type: 2}
   hasInfiniteAmmo: 0
   hasInfiniteClipCapacity: 0
   weaponClipAmmoCapacity: 10
@@ -26,3 +26,4 @@ MonoBehaviour:
   weaponFireRate: 0.5
   weaponPrechargeTime: 0.3
   weaponReloadTime: 4
+  weaponLevel: 2

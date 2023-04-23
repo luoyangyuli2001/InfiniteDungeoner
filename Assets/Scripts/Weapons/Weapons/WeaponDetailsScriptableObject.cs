@@ -75,6 +75,10 @@ public class WeaponDetailsScriptableObject : ScriptableObject
     [Tooltip("This is the weapon reload time in seconds")]
     #endregion Tooltip
     public float weaponReloadTime = 0f;
+    #region Tooltip
+    [Tooltip("This is the weapon's level")]
+    #endregion Tooltip
+    public int weaponLevel = 0;
 
     #region Validation
 #if UNITY_EDITOR
@@ -92,6 +96,7 @@ public class WeaponDetailsScriptableObject : ScriptableObject
         {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(weaponClipAmmoCapacity), weaponClipAmmoCapacity, false);
         }
+        HelperUtilities.ValidateCheckPositiveValue(this, nameof(weaponLevel), weaponLevel, true);
     }
 #endif
     #endregion Validation

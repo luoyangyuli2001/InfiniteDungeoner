@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEffectName: N22LaserBlaster Fire
   soundPrefab: {fileID: 2438592971891726309, guid: 3040d7e0f9a61b5409d11d3096a35165, type: 3}
-  soundEffectClip: {fileID: 8300000, guid: 541d6744b90b6e34780c86643231697f, type: 3}
+  soundEffectClip: {fileID: 8300000, guid: de229ff6f23dad645a8f50a8ed868b27, type: 3}
   soundEffectPitchRandomVariationMin: 0.8
   soundEffectPitchRandomVariationMax: 0.9
   soundEffectVolume: 1

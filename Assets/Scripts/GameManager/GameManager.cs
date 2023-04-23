@@ -41,7 +41,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #region Tooltip
     [Tooltip("Populate with the starting dungeon level for testing , first level = 0")]
     #endregion Tooltip
-    [SerializeField] private int currentDungeonLevelListIndex = 0;
+    [SerializeField] public int currentDungeonLevelListIndex = 0;
 
     private Room currentRoom;
     private Room previousRoom;

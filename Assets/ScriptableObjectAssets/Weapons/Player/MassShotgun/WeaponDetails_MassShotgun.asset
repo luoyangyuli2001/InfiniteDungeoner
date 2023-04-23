@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec41f9f2437371141a4b6feaf402f96d, type: 3}
+  m_Name: WeaponDetails_MassShotgun
+  m_EditorClassIdentifier: 
+  weaponName: MassShotgun
+  weaponSprite: {fileID: 21300000, guid: e09a7eb68efb9fd429c7e6f3ecf54a96, type: 3}
+  weaponShootPosition: {x: 1.376, y: 0.208, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: edb158429187b80418f958f7e0756bbe, type: 2}
+  weaponShootEffect: {fileID: 11400000, guid: fb38f4e62a33eef4589091dd2191c567, type: 2}
+  weaponFiringSoundEffect: {fileID: 11400000, guid: a77e73d679b63af42948fd5e5eff0a0a, type: 2}
+  weaponReloadingSoundEffect: {fileID: 11400000, guid: 1d33e8cf90143904ca8285771d9835d0, type: 2}
+  hasInfiniteAmmo: 0
+  hasInfiniteClipCapacity: 0
+  weaponClipAmmoCapacity: 6
+  weaponAmmoCapacity: 150
+  weaponFireRate: 0.5
+  weaponPrechargeTime: 0
+  weaponReloadTime: 1
+  weaponLevel: 5

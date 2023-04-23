@@ -26,3 +26,4 @@ MonoBehaviour:
   weaponFireRate: 2
   weaponPrechargeTime: 0
   weaponReloadTime: 10
+  weaponLevel: 5

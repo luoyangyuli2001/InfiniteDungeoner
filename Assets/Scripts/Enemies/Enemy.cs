@@ -93,6 +93,7 @@ public class Enemy : MonoBehaviour
     private void EnemyDestroyed()
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
+        StaticEventHandler.CallMultiplierEvent(true);
         destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
     }
 

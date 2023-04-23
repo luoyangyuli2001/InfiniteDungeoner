@@ -124,10 +124,14 @@ public class FireWeapon : MonoBehaviour
             yield return new WaitForSeconds(ammoSpawnInterval);
         }
 
-        if (!activeWeapon.GetCurrentWeapon().weaponDetails.hasInfiniteClipCapacity)
+        if (!activeWeapon.GetCurrentWeapon().weaponDetails.hasInfiniteClipCapacity && !activeWeapon.GetCurrentWeapon().weaponDetails.hasInfiniteAmmo)
         {
             activeWeapon.GetCurrentWeapon().weaponClipRemainingAmmo--;
             activeWeapon.GetCurrentWeapon().weaponRemainingAmmo--;
+        }
+        else if (activeWeapon.GetCurrentWeapon().weaponDetails.hasInfiniteAmmo)
+        {
+            activeWeapon.GetCurrentWeapon().weaponClipRemainingAmmo--;
         }
         weaponFiredEvent.CallWeaponFiredEvent(activeWeapon.GetCurrentWeapon());
         WeaponShootEffect(aimAngle);

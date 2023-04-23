@@ -76,6 +76,8 @@ public class ChestSpawner : MonoBehaviour
     #endregion Tooltip
     [SerializeField] private List<RangeByLevel> ammoSpawnByLevelList;
 
+    private Player player;
+
     private bool chestSpawned = false;
     private Room chestRoom;
 
@@ -120,6 +122,7 @@ public class ChestSpawner : MonoBehaviour
     {
         chestSpawned = true;
         if (!RandomSpawnChest()) return;
+        if (player == null) player = GameManager.Instance.GetPlayer();
         GetItemsToSpawn(out int ammoNum, out int healthNum, out int weaponNum);
         GameObject chestGameObject = Instantiate(chestPrefab, this.transform);
         if (chestSpawnPosition == ChestSpawnPosition.atSpawnerPosition)
@@ -133,6 +136,18 @@ public class ChestSpawner : MonoBehaviour
             chestGameObject.transform.position = spawnPosition + variation;
         }
         Chest chest = chestGameObject.GetComponent<Chest>();
+        if (CheckPlayerLowHP())
+        {
+            healthNum = 1;
+        }
+        if (CheckPlayerLowAmmo())
+        {
+            ammoNum = 1;
+        }
+        if (!CheckPlayerWeapon())
+        {
+            weaponNum = 1;
+        }
         if (chestSpawnEvent == ChestSpawnEvent.onRoomEntry)
         {
             chest.Initialize(false, GetHealthPercentToSpawn(healthNum), GetWeaponDetailsToSpawn(weaponNum), GetAmmoPercentToSpawn(ammoNum));
@@ -143,6 +158,39 @@ public class ChestSpawner : MonoBehaviour
         }
     }
 
+    private bool CheckPlayerLowHP()
+    {
+        return player.health.GetCurrentHealth() < player.health.GetStartingHealth() * 0.2f;
+    }
+
+    private bool CheckPlayerLowAmmo()
+    {
+        List<Weapon> weaponList = player.weaponList;
+        int ammoThreshold = 10;
+        foreach (Weapon weapon in weaponList)
+        {
+            if (weapon.weaponRemainingAmmo < ammoThreshold)
+            {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    private bool CheckPlayerWeapon()
+    {
+        List<Weapon> weaponList = player.weaponList;
+        int level = GameManager.Instance.currentDungeonLevelListIndex;
+        foreach (Weapon weapon in weaponList)
+        {
+            if (weapon.weaponDetails.weaponLevel == level || weapon.weaponDetails.weaponLevel > level)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     private bool RandomSpawnChest()
     {
         int chancePercent = Random.Range(chestSpawnChanceMin, chestSpawnChanceMax + 1);
@@ -203,6 +251,10 @@ public class ChestSpawner : MonoBehaviour
         {
             if (spawnPercentByLevel.dungeonLevel == GameManager.Instance.GetCurrentDungeonLevel())
             {
+                if (CheckPlayerLowAmmo())
+                {
+                    return Random.Range(90, 100);
+                }
                 return Random.Range(spawnPercentByLevel.min, spawnPercentByLevel.max);
             }
         }
@@ -215,7 +267,10 @@ public class ChestSpawner : MonoBehaviour
         foreach (RangeByLevel spawnPercentByLevel in healthSpawnByLevelList)
         {
             if (spawnPercentByLevel.dungeonLevel == GameManager.Instance.GetCurrentDungeonLevel())
-            {
+            {   
+                if (CheckPlayerLowHP()) {
+                    return Random.Range((int)Mathf.Floor(player.health.GetStartingHealth() * 0.9f), player.health.GetStartingHealth());
+                }
                 return Random.Range(spawnPercentByLevel.min, spawnPercentByLevel.max);
             }
         }
@@ -227,6 +282,15 @@ public class ChestSpawner : MonoBehaviour
         if (weaponNumber == 0) return null;
         RandomSpawnableObject<WeaponDetailsScriptableObject> weaponRandom = new RandomSpawnableObject<WeaponDetailsScriptableObject>(weaponSpawnByLevelList);
         WeaponDetailsScriptableObject weaponDetails = weaponRandom.GetItem();
+        if (!CheckPlayerWeapon())
+        {
+            int trail_num = 0;
+            while(trail_num < 10 && weaponDetails.weaponLevel < GameManager.Instance.currentDungeonLevelListIndex)
+            {
+                weaponDetails = weaponRandom.GetItem();
+                trail_num++;
+            }
+        }
         return weaponDetails;
     }
 

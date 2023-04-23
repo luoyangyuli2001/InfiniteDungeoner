@@ -4115,6 +4115,15 @@ MonoBehaviour:
   - poolSize: 10
     prefab: {fileID: 8482708449270221799, guid: 6f655f245b959e24a8cc4683d3fd7be9, type: 3}
     componentType: IFireable
+  - poolSize: 10
+    prefab: {fileID: 1220317592107510504, guid: 795fc47ad56968f48a022ef88aa5dcc2, type: 3}
+    componentType: IFireable
+  - poolSize: 20
+    prefab: {fileID: 6146175329612137700, guid: 33e5a628ba573874ab8b68b4a3a42db1, type: 3}
+    componentType: IFireable
+  - poolSize: 20
+    prefab: {fileID: 6146175329612137700, guid: e4c553563edd2a74daa4c7f3721e295c, type: 3}
+    componentType: IFireable
 --- !u!4 &1104018851
 Transform:
   m_ObjectHideFlags: 0

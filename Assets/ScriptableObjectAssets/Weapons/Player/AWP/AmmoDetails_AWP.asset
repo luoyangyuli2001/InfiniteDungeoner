@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33df1b5444b6d61469de7cb7e7bc15c6, type: 3}
+  m_Name: AmmoDetails_AWP
+  m_EditorClassIdentifier: 
+  ammoName: AWP Ammo
+  isPlayerAmmo: 1
+  ammoSprite: {fileID: 21300000, guid: c3be09077243891458bdbf46a57d2e8a, type: 3}
+  ammoPrefabArray:
+  - {fileID: 6146175329612137700, guid: 0e8fb51762e86c14284ff1af0c1d99f0, type: 3}
+  ammoMaterial: {fileID: 2100000, guid: 33a55999e44f4724191171c59fc64319, type: 2}
+  ammoChargeTime: 0
+  ammoChargeMaterial: {fileID: 0}
+  ammoHitEffect: {fileID: 11400000, guid: 19515756410a7a146a900accbcb9af33, type: 2}
+  ammoDamage: 200
+  ammoSpeedMin: 25
+  ammoSpeedMax: 25
+  ammoRange: 50
+  ammoRotationSpeed: 1
+  ammoSpreadMin: 0
+  ammoSpreadMax: 0.5
+  ammoSpawnAmountMin: 1
+  ammoSpawnAmountMax: 1
+  ammoSpawnIntervalMin: 0
+  ammoSpawnIntervalMax: 0
+  isAmmoTrail: 0
+  ammoTrailTime: 0
+  ammoTrailMaterial: {fileID: 0}
+  ammoTrailStartWidth: 0
+  ammoTrailEndWidth: 0

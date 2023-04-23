@@ -18,7 +18,7 @@ public class Health : MonoBehaviour
     private int startingHealth;
     private int currentHealth;
     private HealthEvent healthEvent;
-    private Player player;
+    public Player player;
     private Coroutine immunityCoroutine;
     private bool isImmuneAfterHit = false;
     private float immunityTime = 0f;
@@ -79,6 +79,10 @@ public class Health : MonoBehaviour
         {
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
+            if(player != null)
+            {
+                StaticEventHandler.CallMultiplierEvent(false);
+            }
             PostHitImmunity();
             if (healthBar != null)
             {
@@ -127,6 +131,10 @@ public class Health : MonoBehaviour
         currentHealth = startingHealth;
     }
 
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
     public int GetStartingHealth()
     {
         return startingHealth;

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec41f9f2437371141a4b6feaf402f96d, type: 3}
+  m_Name: WeaponDetails_Railgun
+  m_EditorClassIdentifier: 
+  weaponName: Railgun
+  weaponSprite: {fileID: 21300000, guid: 6917a8d6dc431ee46b6a37e7a1fcea95, type: 3}
+  weaponShootPosition: {x: 2.1, y: 0.294, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: 07d1a5a5c9675a947bcac2c5fc7538fc, type: 2}
+  weaponShootEffect: {fileID: 11400000, guid: 02da6773b2b503549a518a73bca0c62a, type: 2}
+  weaponFiringSoundEffect: {fileID: 11400000, guid: 63952668e4db67f4e8b66ceb788ab6c5, type: 2}
+  weaponReloadingSoundEffect: {fileID: 11400000, guid: 41b317e4171b55b4b9caae1b610f9471, type: 2}
+  hasInfiniteAmmo: 0
+  hasInfiniteClipCapacity: 0
+  weaponClipAmmoCapacity: 10
+  weaponAmmoCapacity: 150
+  weaponFireRate: 0.4
+  weaponPrechargeTime: 0.3
+  weaponReloadTime: 4
+  weaponLevel: 3

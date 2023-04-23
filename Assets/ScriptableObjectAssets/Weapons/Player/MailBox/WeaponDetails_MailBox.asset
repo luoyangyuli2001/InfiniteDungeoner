@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec41f9f2437371141a4b6feaf402f96d, type: 3}
+  m_Name: WeaponDetails_MailBox
+  m_EditorClassIdentifier: 
+  weaponName: MailBox
+  weaponSprite: {fileID: 21300000, guid: 987696e3b89402f4cb9a41cb4f559f6c, type: 3}
+  weaponShootPosition: {x: 1.15, y: 0.329, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: 606d8c44e465e374fa998fb85f7178fa, type: 2}
+  weaponShootEffect: {fileID: 11400000, guid: 3edbe88f0e89e784f9e3c7f59b28eda9, type: 2}
+  weaponFiringSoundEffect: {fileID: 11400000, guid: 26d172fa1af562643ba7c40cb90992e4, type: 2}
+  weaponReloadingSoundEffect: {fileID: 11400000, guid: 4343a0f6c9986004697ac8b5711c0e1f, type: 2}
+  hasInfiniteAmmo: 0
+  hasInfiniteClipCapacity: 0
+  weaponClipAmmoCapacity: 8
+  weaponAmmoCapacity: 100
+  weaponFireRate: 0.3
+  weaponPrechargeTime: 0
+  weaponReloadTime: 2
+  weaponLevel: 1
