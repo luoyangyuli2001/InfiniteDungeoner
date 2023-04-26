@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8204ef055d824204dbdea40bd04fbbfb, type: 3}
+  m_Name: PlayerDetails_TheCheater
+  m_EditorClassIdentifier: 
+  playerCharacterName: The General
+  playerPrefab: {fileID: 2223644787970258917, guid: 0c8f08e81f4182444b1e7f5de11ed571, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: e87ce176a15556c459b355908992b930, type: 2}
+  playerHealthAmount: 99999
+  isImmuneAfterHit: 1
+  hitImmunityTime: 3
+  startingWeapon: {fileID: 11400000, guid: b548da9c40d69804ca97d491a359070d, type: 2}
+  startingWeaponList:
+  - {fileID: 11400000, guid: b548da9c40d69804ca97d491a359070d, type: 2}
+  - {fileID: 11400000, guid: 4ada9f28707fbb94ab1a3e278c260357, type: 2}
+  - {fileID: 11400000, guid: c09a23c4d8932144293487b01d0ae562, type: 2}
+  - {fileID: 11400000, guid: bde2c044955c42541adda9412bd055e5, type: 2}
+  - {fileID: 11400000, guid: 05bc5b931840a914ba1ec6f9dcb3106d, type: 2}
+  - {fileID: 11400000, guid: 76839ea43ab0a0148877a4460df66a1a, type: 2}
+  - {fileID: 11400000, guid: 00a9c98286309bb4aa1063cadb64d67c, type: 2}
+  - {fileID: 11400000, guid: 5584cb88db2151d44bf98ebce77fe23d, type: 2}
+  - {fileID: 11400000, guid: e7912152bd2d6444b9083a7aa6e30975, type: 2}
+  - {fileID: 11400000, guid: 1df53aef923d09c4d89ecf0474dcf6c3, type: 2}
+  - {fileID: 11400000, guid: 8b2bf2cf4f4e5044c8f883ef67011e2f, type: 2}
+  - {fileID: 11400000, guid: ed5a8522638028f48b49cea005ede5b8, type: 2}
+  - {fileID: 11400000, guid: 75921b5fe9ffe2645930acb51a013369, type: 2}
+  - {fileID: 11400000, guid: 30b5bbcc9cbf3a94490c3ff8e4e65103, type: 2}
+  - {fileID: 11400000, guid: 04ab9ec661f3b4a4fba8024bed9d5ac2, type: 2}
+  - {fileID: 11400000, guid: 28a38b07b6c5b3f4f87e3291071e725d, type: 2}
+  playerMiniMapIcon: {fileID: 21300000, guid: 709f49100a0267f419aa33d571fb9d25, type: 3}
+  playerHandSprite: {fileID: 21300000, guid: a8c352369ed75924d84743672d1ab512, type: 3}

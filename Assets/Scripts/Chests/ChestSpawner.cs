@@ -166,10 +166,10 @@ public class ChestSpawner : MonoBehaviour
     private bool CheckPlayerLowAmmo()
     {
         List<Weapon> weaponList = player.weaponList;
-        int ammoThreshold = 10;
         foreach (Weapon weapon in weaponList)
         {
-            if (weapon.weaponRemainingAmmo < ammoThreshold)
+            if (weapon.weaponDetails.hasInfiniteAmmo || weapon.weaponDetails.hasInfiniteClipCapacity) continue;
+            if (weapon.weaponRemainingAmmo * 10 < weapon.weaponDetails.weaponAmmoCapacity)
             {
                 return true;
             }

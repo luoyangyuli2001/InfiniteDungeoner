@@ -4073,13 +4073,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolArray:
-  - poolSize: 30
+  - poolSize: 100
     prefab: {fileID: 6146175329612137700, guid: a68ca711f96c5d8419b5a1b5989570f1, type: 3}
     componentType: IFireable
-  - poolSize: 30
+  - poolSize: 100
     prefab: {fileID: 6146175329612137700, guid: 0e8fb51762e86c14284ff1af0c1d99f0, type: 3}
     componentType: IFireable
-  - poolSize: 30
+  - poolSize: 100
     prefab: {fileID: 6146175329612137700, guid: 99357a225e1a4d1488c039615cf2750e, type: 3}
     componentType: IFireable
   - poolSize: 10

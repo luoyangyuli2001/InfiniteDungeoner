@@ -50,6 +50,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d75985c8a76588b4784afd41a0ea6296, type: 2}
   - {fileID: 11400000, guid: 3ad4922236d72a54ba96860c50534285, type: 2}
   - {fileID: 11400000, guid: eb2e4787bde247e4989f0d411376b455, type: 2}
+  - {fileID: 11400000, guid: 6e207e606d2cf6545a07c5cd73f71419, type: 2}
   currentPlayer: {fileID: 11400000, guid: 57aed68dcd18bc046ae123b6218dec02, type: 2}
   soundsMasterMixerGroup: {fileID: -4734643798044506327, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   doorOpenCloseSoundEffect: {fileID: 11400000, guid: d0e910e0589c40f4a9156487872f0a3c, type: 2}
